@@ -52,7 +52,9 @@ template<typename T> inline void ensureOrder(T &a, T &b)
 void OLED::begin() {
   SPI.begin();
   SPI.setBitOrder(MSBFIRST);
-#ifdef __AVR__
+#ifdef ESP32
+SPI.setFrequency(20000000); // 20MHz works very reliably
+#else
   SPI.setClockDivider(SPI_CLOCK_DIV2); // 8MHz on standard Arduino models
 #else
   SPI.setClockDivider(5); // 16.8MHz on Due
